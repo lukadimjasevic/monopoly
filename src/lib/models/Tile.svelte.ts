@@ -29,4 +29,14 @@ export abstract class Tile implements ITile {
     }
 
     abstract actionOnLand(player: Player): void;
+
+    addPlayer(player: Player): Player[] {
+        this.players = [...this.players, player];
+        return this.players;
+    }
+
+    removePlayer(player: Player): Player[] {
+        this.players = this.players.filter(p => p.id != player.id);
+        return this.players;
+    }
 }

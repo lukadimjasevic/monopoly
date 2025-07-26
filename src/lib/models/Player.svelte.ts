@@ -23,12 +23,12 @@ export class Player {
         this.mapPosition = $state({ col: 1, row: 11 });
     }
 
-    move(steps: number) {
+    move(steps: number): Tile {
         this.position = (this.position + steps) % 40;
-        const tile = this.getCurrentTile();
-        const newPos = GridUtil.getPlayerPosition(tile);
-        this.mapPosition = newPos;
+        const newTile = this.getTile();
+        this.mapPosition = GridUtil.getPlayerPosition(newTile);
         console.log(`Player position updated: (${this.mapPosition.col}, ${this.mapPosition.row})`);
+        return newTile;
     }
 
     pay(amount: number) {
@@ -43,7 +43,7 @@ export class Player {
         this.properties.push(tileId);
     }
 
-    getCurrentTile(): Tile {
-        return boardTiles.filter(tile => tile.id == this.position)[0];
+    getTile(): Tile {
+        return boardTiles.find(tile => tile.id == this.position)!;
     }
 }

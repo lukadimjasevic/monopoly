@@ -14,11 +14,10 @@ export class Board {
     }
 
     movePlayerToTile(player: Player, steps: number): Tile {
-        const currentTile = player.getCurrentTile();
-        player.move(steps);
-        const newTile = player.getCurrentTile();
-        currentTile.players = currentTile.players.filter(p => p.id != player.id);
-        newTile.players.push(player);
+        const currentTile = player.getTile();
+        const newTile = player.move(steps);
+        currentTile.removePlayer(player);
+        newTile.addPlayer(player);
         return newTile;
     }
 }
