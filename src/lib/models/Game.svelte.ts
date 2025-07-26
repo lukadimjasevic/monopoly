@@ -12,6 +12,7 @@ export class Game {
     constructor(board: Board, players: Player[]) {
         this.board = board;
         this.players = players;
+        this.board.getTile(0).players = this.players; // Put the players on the first tile
     }
 
     get currentPlayer(): Player {
@@ -51,7 +52,8 @@ const board = new Board(boardTiles);
 
 const player1 = new Player(1, "John");
 const player2 = new Player(2, "Rick");
-const players = [player1, player2]
+const player3 = new Player(3, "Mark");
+const players = [player1, player2, player3];
 
 
 export const game = new Game(board, players);

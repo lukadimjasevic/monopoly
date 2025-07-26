@@ -19,11 +19,13 @@ export abstract class Tile implements ITile {
     id: number;
     name: string;
     type: TileType;
+    players: Player[]; // Players on this Tile
 
     constructor(id: number, name: string, type: TileType) {
         this.id = id;
         this.name = name;
         this.type = type;
+        this.players = $state([]);
     }
 
     abstract actionOnLand(player: Player): void;

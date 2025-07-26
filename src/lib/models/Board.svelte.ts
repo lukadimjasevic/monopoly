@@ -14,8 +14,11 @@ export class Board {
     }
 
     movePlayerToTile(player: Player, steps: number): Tile {
+        const currentTile = player.getCurrentTile();
         player.move(steps);
-        const tile = this.getTile(player.position);
-        return tile;
+        const newTile = player.getCurrentTile();
+        currentTile.players = currentTile.players.filter(p => p.id != player.id);
+        newTile.players.push(player);
+        return newTile;
     }
 }

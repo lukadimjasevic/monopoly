@@ -54,4 +54,11 @@ export class GridUtil {
     static getPlayerPosition(tile: Tile): GridPosition {
         return this.getGridPosition(tile);
     }
+
+    static getTileRotationDegree(tile: Tile): number {
+        const id = tile.id;
+        if (id >= 1 && id <= 9) return 90;
+        else if (id >= 21 && id <= 29) return -90;
+        else return 0;
+    }
 }

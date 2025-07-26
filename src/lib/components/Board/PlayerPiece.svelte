@@ -3,21 +3,25 @@
     let { player } : {player: Player } = $props();
 </script>
 
-<div class="piece" style="grid-row: {player.mapPosition.row}; grid-column: {player.mapPosition.col}" title={player.name}>
-    <div>{player.name}</div>
-    <div>({player.mapPosition.col}, {player.mapPosition.row})</div>
+<div class="piece" style="grid-row: {player.mapPosition.row}; grid-column: {player.mapPosition.col};" title={player.name}>
+    {player.name[0]}
 </div>
 
 <style>
     .piece {
+        width: 35px;
+        height: 35px;
+        box-sizing: border-box;
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
-        background: blue;
-        color: white;
+        font-size: 0.6rem;
+        padding: 2px;
         border: 2px solid #000;
         border-radius: 50%;
-        font-size: 0.75rem;
-        padding: 0.5em;
+        background: blue;
+        color: white;
+        z-index: 20;
     }
 </style>
