@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Tile } from "$lib/models/Tile.svelte";
-    import { GridUtil } from "$lib/utils/grid";
-    import { TypeGuardUtil } from "$lib/utils/typeGuard";
+    import { GridUtil } from "$lib/utils/GridUtil";
+    import { TypeGuardUtil } from "$lib/utils/TypeGuardUtil";
     import PlayerPiece from "./PlayerPiece.svelte";
     let { tile } : { tile: Tile } = $props();
   
@@ -15,7 +15,7 @@
         <div>
             <strong>{tile.name}</strong>
         </div>
-        {#if TypeGuardUtil.isBuyableTile(tile)}
+        {#if TypeGuardUtil.isChargeableTile(tile)}
             <div>
                 <span>{tile.price}€</span>
             </div>

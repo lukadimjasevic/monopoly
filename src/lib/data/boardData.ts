@@ -9,13 +9,6 @@ import { JailTile } from "$lib/models/JailTile.svelte";
 import { ParkingTile } from "$lib/models/ParkingTile.svelte";
 import { GoToJailTile } from "$lib/models/GoToJailTile.svelte";
 
-export interface TileData {
-    id: number;
-    name: string;
-    type: TileType;
-    price?: number;
-}
-
 export const boardTiles: Tile[] = [
     new StartTile(0, "Kreni"),
     new PropertyTile(1, "Jeretova ulica", 60),

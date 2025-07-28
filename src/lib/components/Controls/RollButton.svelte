@@ -2,7 +2,7 @@
     import { game } from "$lib/models/Game.svelte";
 </script>
 
-<button class="roll-button" on:click="{() => game.takeTurn()}">
+<button class="roll-button" on:click="{() => game.nextTurn()}">
     Roll
 </button>
 

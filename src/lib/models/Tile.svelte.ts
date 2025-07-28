@@ -8,11 +8,12 @@ export interface ITile {
     type: TileType;
 }
 
-export interface TileBoughtableBehavior extends ITile {
+export interface TileChargeable extends ITile {
     price: number;
-    owner: Player | null;
+}
 
-    buy(player: Player): void;
+export interface TileOwnable extends TileChargeable {
+    owner: Player | null;
 }
 
 export abstract class Tile implements ITile {

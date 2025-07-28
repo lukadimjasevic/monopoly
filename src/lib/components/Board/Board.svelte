@@ -1,6 +1,8 @@
 <script lang="ts">
     import Tile from './Tile.svelte';
     import RollButton from '../Controls/RollButton.svelte';
+    import WaitingModal from './WaitingModal.svelte';
+    import BuyOfferModal from './BuyOfferModal.svelte';
     import { boardTiles } from '$lib/data/boardData';
 </script>
 
@@ -10,6 +12,8 @@
     {/each}
 
     <div class="center">
+        <WaitingModal />
+        <BuyOfferModal />
         <RollButton />
     </div>
 </div>
@@ -30,7 +34,9 @@
         grid-row: 2 / 11;
         background: #fff;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 10px;
     }
 </style>

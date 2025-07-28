@@ -3,8 +3,8 @@
     let { player } : {player: Player } = $props();
 </script>
 
-<div class="piece" style="grid-row: {player.mapPosition.row}; grid-column: {player.mapPosition.col};" title={player.name}>
-    {player.name[0]}
+<div class="piece" title={player.name}>
+    {player.name.charAt(0)}
 </div>
 
 <style>

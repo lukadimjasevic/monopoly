@@ -1,50 +1,92 @@
 import { Board } from "./Board.svelte";
 import { Player } from "./Player.svelte";
-import { Tile } from "./Tile.svelte";
 import { boardTiles } from "$lib/data/boardData";
+
+export type GameStatus = "notStarted" | "inProgress" | "waitingForPlayer" | "finished";
 
 
 export class Game {
     board: Board;
     players: Player[];
     currentPlayerIndex: number = 0;
+    status: GameStatus = "notStarted";
 
     constructor(board: Board, players: Player[]) {
         this.board = board;
         this.players = players;
-        this.board.getTile(0).players = this.players; // Put the players on the first tile
+        this.movePlayersToStart();
+        this.setStartingPlayer();
+        this.start();
     }
 
     get currentPlayer(): Player {
         return this.players[this.currentPlayerIndex];
     }
 
-    private rollDice(): [number, number] {
+    get nextPlayer(): Player {
+        const pos = (this.currentPlayerIndex + 1) % this.numOfPlayers;
+        return this.players[pos];
+    }
+
+    get numOfPlayers(): number {
+        return this.players.length;
+    }
+
+    rollDice(): [number, number] {
         const die1 = Math.ceil(Math.random() * 6);
         const die2 = Math.ceil(Math.random() * 6);
         return [die1, die2];
     }
 
-    takeTurn(): Tile {
-        // Get new position 
-        const [die1, die2] = this.rollDice();
-        console.log(`${this.currentPlayer.name} je bacio kocke i dobio je ${die1 + die2}`)
+    nextTurn() {
+        if (this.currentPlayer.waitingToMove) {
+            this.currentPlayer.actionMoving();
 
-        // Move player to new position
-        const tile = this.board.movePlayerToTile(this.currentPlayer, die1 + die2);
-        console.log(`${this.currentPlayer.name} staje na "${tile.name}"`)
+            // Get new position 
+            const [die1, die2] = this.rollDice();
 
-        // Complete the action on current land
-        tile.actionOnLand(this.currentPlayer);
+            // Move player to new position
+            const tile = this.board.movePlayerToTile(this.currentPlayer, die1 + die2);
 
-        // Switch to new player
-        this.nextPlayer();
+            // Complete the action on current land
+            tile.actionOnLand(this.currentPlayer);
+            return;
+        }
 
-        return tile;
+        if (this.currentPlayer.hasFinishedTurn) {
+            this.currentPlayer.actionWaiting();
+            this.setNextPlayer();
+            this.nextTurn();
+            return;
+        }
+
+        console.log(`Player '${this.currentPlayer.name}' is still on move.`);
+        return;
     }
 
-    private nextPlayer() {
-        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.players.length;
+    setNextPlayer() {
+        this.currentPlayerIndex = (this.currentPlayerIndex + 1) % this.numOfPlayers;
+    }
+
+    private movePlayersToStart(): void {
+        if (this.status !== "notStarted") return;
+        const startTile = this.board.tiles.find(t => t.type === "start");
+        if (startTile) {
+            startTile.players = this.players;
+        }
+        return;
+    }
+
+    private setStartingPlayer(): void {
+        if (this.status !== "notStarted") return;
+        const randomPlayerPos = Math.floor(Math.random() * this.numOfPlayers);
+        this.currentPlayerIndex = randomPlayerPos;
+        return;
+    }
+
+    private start(): void {
+        if (this.status !== "notStarted") return;
+        this.status = "inProgress";
     }
 }
 
