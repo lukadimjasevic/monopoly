@@ -1,18 +1,19 @@
 <script lang="ts">
-    import { buyOffer } from "$lib/states/BuyOffer.svelte";
-    import { game } from "$lib/models/Game.svelte";
+    import { buyOfferManager } from "$lib/states/BuyOfferManager.svelte";
+
+    const offer = $derived(buyOfferManager.isActive() ? buyOfferManager.offer : null);
 </script>
 
-{#if buyOffer.isActive()}
+{#if offer}
 <div class="modal">
     <div class="modal-title">
-        <h4>Offer to player <b>{buyOffer.player.name}</b></h4>
+        <h4>Offer to player <b>{offer.player.name}</b></h4>
     </div>
     <div class="modal-content">
-        <h2>{buyOffer.tile.name}</h2>
-        <p>Price: {buyOffer.tile.price}</p>
-        <button on:click={() => game.currentPlayer.actionAcceptOffer()}>Buy</button>
-        <button on:click={() => game.currentPlayer.actionCancelOffer()}>Skip</button>
+        <h2>{offer.property.name}</h2>
+        <p>Price: {offer.price}</p>
+        <button onclick={() => offer.property.acceptOffer()}>Buy</button>
+        <button onclick={() => offer.property.cancelOffer()}>Skip</button>
     </div>
 </div>
 {/if}

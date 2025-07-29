@@ -14,6 +14,7 @@ export interface TileChargeable extends ITile {
 
 export interface TileOwnable extends TileChargeable {
     owner: Player | null;
+    buy(player: Player): boolean;
 }
 
 export abstract class Tile implements ITile {

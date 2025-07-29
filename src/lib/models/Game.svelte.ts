@@ -2,7 +2,7 @@ import { Board } from "./Board.svelte";
 import { Player } from "./Player.svelte";
 import { boardTiles } from "$lib/data/boardData";
 
-export type GameStatus = "notStarted" | "inProgress" | "waitingForPlayer" | "finished";
+export type GameStatus = "notStarted" | "inProgress" | "finished";
 
 
 export class Game {
